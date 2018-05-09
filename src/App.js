@@ -2,7 +2,6 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 import Search from './Search'
-
 import './App.css'
 import { Route } from 'react-router-dom'
 
@@ -49,7 +48,9 @@ class BooksApp extends React.Component {
           />)}
         />
         <Route exact path={"/search"} render={() => (
-          <Search />)}
+          <Search
+            onBookMove={this.moveBook}
+          />)}
         />
 
 
