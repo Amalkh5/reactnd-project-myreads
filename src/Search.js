@@ -20,9 +20,7 @@ class Search extends React.Component {
             BooksAPI.search(query).then((books) => {
                 if (books.length > 0) {
                     console.log(books);
-                    this.setState({
-                        books: books
-                    })
+                    this.setState({ books })
                 }
 
             })
@@ -31,6 +29,7 @@ class Search extends React.Component {
 
 
     render() {
+        const { books } = this.state
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -43,7 +42,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    {this.state.books ? <Book data={this.state.books} onBookMove={this.props.onBookMove} /> : null}
+                    {books ? <Book data={books} onBookMove={this.props.onBookMove} /> : null}
 
                 </div>
 

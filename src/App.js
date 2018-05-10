@@ -5,10 +5,12 @@ import Search from './Search'
 import './App.css'
 import { Route } from 'react-router-dom'
 
+
 class BooksApp extends React.Component {
   state = {
     books: {},
   }
+
 
   getAllBooks() {
     BooksAPI.getAll().then((books) => {
@@ -37,7 +39,9 @@ class BooksApp extends React.Component {
     }
   }
 
+
   render() {
+
     return (
       <div className="app">
 
