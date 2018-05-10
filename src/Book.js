@@ -13,9 +13,11 @@ class Book extends React.Component {
 
                                     < li key={data.id} >                                        <div className="book">
                                         <div className="book-top">
-                                            <div className="book-cover" style={{
-                                                width: 128, height: 193, backgroundImage: 'url("' + data.imageLinks.thumbnail + '")'
-                                            }}></div>
+                                            {data.imageLinks ?
+                                                <div className="book-cover" style={{
+                                                    width: 128, height: 193, backgroundImage: 'url("' + data.imageLinks.thumbnail + '")'
+                                                }}></div> : null}
+
                                             <div className="book-shelf-changer">
                                                 <select onChange={(event) => this.props.onBookMove(data, event.target.value, this.props.shelfTitle)}>
                                                     <option value="none" disabled>Move to...</option>
