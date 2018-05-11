@@ -5,22 +5,36 @@ import Book from './Book'
 
 
 class Search extends React.Component {
-    state = {
-        query: '',
-        books: []
+    constructor(props) {
+        super(props);
+        this.state = { bookOnHomePage: props.allbooks, query: '' }
     }
-
+    componentWillReceiveProps(props) {
+        this.setState({ bookOnHomePage: props.allbooks });
+    }
     search = (query) => {
         if (query === '' || typeof query !== 'string') {
             this.setState({
-                books: []
+                bookInSearchResults: []
             })
         }
         else {
-            BooksAPI.search(query).then((books) => {
-                if (books.length > 0) {
-                    console.log(books);
-                    this.setState({ books })
+            BooksAPI.search(query).then((bookInSearchResults) => {
+                if (bookInSearchResults.error) {
+                    this.setState({ bookInSearchResults: [] })
+                }
+                else if (bookInSearchResults.length > 0) {
+                    let bookOnHomePage = this.state.bookOnHomePage;
+                    bookOnHomePage.map((data) => {
+                        bookInSearchResults.map((k) => {
+                            if (k.id === data.id) {
+                                console.log(k.title + '   == ' + data.title);
+                                k.shelf = data.shelf
+                                console.log(k.shelf + '   == ' + data.shelf);
+                            }
+                        })
+                    });
+                    this.setState({ bookInSearchResults: bookInSearchResults })
                 }
 
             })
@@ -29,7 +43,7 @@ class Search extends React.Component {
 
 
     render() {
-        const { books } = this.state
+        const { bookInSearchResults } = this.state
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -42,8 +56,7 @@ class Search extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    {books ? <Book data={books} onBookMove={this.props.onBookMove} /> : null}
-
+                    {bookInSearchResults ? <Book data={bookInSearchResults} onBookMove={this.props.onBookMove} /> : null}
                 </div>
 
             </div>
